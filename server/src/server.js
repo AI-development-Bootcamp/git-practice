@@ -1,11 +1,14 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import todosRoutes from './routes/todos.js';
 
 const fastify = Fastify({ logger: true });
 
 await fastify.register(cors, {
   origin: 'http://localhost:5173'
 });
+
+await fastify.register(todosRoutes, { prefix: '/api/todos' });
 
 const start = async () => {
   try {
