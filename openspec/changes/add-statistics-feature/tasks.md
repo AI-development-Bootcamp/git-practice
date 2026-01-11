@@ -16,9 +16,9 @@
 
 ## 3. Frontend: API Service Extension
 
-- [ ] 3.1 Add `statistics` object to `client/src/services/api.js`
-- [ ] 3.2 Add `getAll()` method that calls `GET /api/statistics`
-- [ ] 3.3 Handle errors appropriately
+- [x] 3.1 Add `statistics` object to `client/src/services/api.js`
+- [x] 3.2 Add `getAll()` method that calls `GET /api/statistics`
+- [x] 3.3 Handle errors appropriately
 
 ## 4. Frontend: Navigation Component
 - [x] 4.1 Create `client/src/components/Navigation.jsx`
