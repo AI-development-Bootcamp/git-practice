@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import TodoList from './TodoList';
 import AddTodo from './AddTodo';
+import Navigation from './Navigation';
+import StatisticsPage from './StatisticsPage';
 import '../App.css';
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState('tasks');
 
   useEffect(() => {
     loadTodos();
@@ -55,32 +58,46 @@ function App() {
     }
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="app">
       <header className="header">
         <h1>Todo App</h1>
       </header>
 
-      <main className="main">
-        <AddTodo onAdd={handleAdd} />
+      <div className="app-content">
+        <Navigation currentPage={currentPage} onPageChange={handlePageChange} />
 
-        {error && (
-          <div className="error-message">
-            {error}
-            <button onClick={() => setError(null)}>x</button>
-          </div>
-        )}
+        <main className="main">
+          {currentPage === 'tasks' ? (
+            <>
+              <AddTodo onAdd={handleAdd} />
 
-        {loading ? (
-          <div className="loading">Loading...</div>
-        ) : (
-          <TodoList
-            todos={todos}
-            onToggle={handleToggle}
-            onDelete={handleDelete}
-          />
-        )}
-      </main>
+              {error && (
+                <div className="error-message">
+                  {error}
+                  <button onClick={() => setError(null)}>x</button>
+                </div>
+              )}
+
+              {loading ? (
+                <div className="loading">Loading...</div>
+              ) : (
+                <TodoList
+                  todos={todos}
+                  onToggle={handleToggle}
+                  onDelete={handleDelete}
+                />
+              )}
+            </>
+          ) : (
+            <StatisticsPage />
+          )}
+        </main>
+      </div>
     </div>
   );
 }
