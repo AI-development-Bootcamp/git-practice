@@ -41,6 +41,10 @@ export const todoService = {
       filtered = filtered.filter(todo => todo.priority === filters.priority);
     }
 
+    if (filters.theme) {
+      filtered = filtered.filter(todo => todo.theme === filters.theme);
+    }
+
     if (filters.search) {
       const searchLower = filters.search.toLowerCase();
       filtered = filtered.filter(todo =>
@@ -54,16 +58,11 @@ export const todoService = {
 
   getById(id) {
     const todos = readTodos();
-    // Handle both string and number IDs by converting both to strings
     return todos.find(todo => String(todo.id) === String(id));
   },
 
   create(todoData) {
     const todos = readTodos();
-    // Find the maximum ID and add 1
-    const maxId = todos.length > 0
-      ? Math.max(...todos.map(todo => Number(todo.id) || 0))
-      : 0;
 
     const newTodo = {
       id: crypto.randomUUID(),
@@ -71,6 +70,8 @@ export const todoService = {
       description: todoData.description,
       status: todoData.status || 'todo',
       priority: todoData.priority || 'medium',
+      theme: todoData.theme || 'other',
+      dueDate: todoData.dueDate || null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     };
