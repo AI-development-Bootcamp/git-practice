@@ -58,7 +58,7 @@ export const todoService = {
 
   getById(id) {
     const todos = readTodos();
-    return todos.find(todo => todo.id === id);
+    return todos.find(todo => String(todo.id) === String(id));
   },
 
   create(todoData) {
@@ -82,7 +82,8 @@ export const todoService = {
 
   update(id, updates) {
     const todos = readTodos();
-    const index = todos.findIndex(todo => todo.id === id);
+    // Handle both string and number IDs by converting both to strings
+    const index = todos.findIndex(todo => String(todo.id) === String(id));
     if (index === -1) return null;
 
     todos[index] = {
@@ -96,7 +97,8 @@ export const todoService = {
 
   delete(id) {
     const todos = readTodos();
-    const index = todos.findIndex(todo => todo.id === id);
+    // Handle both string and number IDs by converting both to strings
+    const index = todos.findIndex(todo => String(todo.id) === String(id));
     if (index === -1) return false;
 
     todos.splice(index, 1);
